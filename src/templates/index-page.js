@@ -1,9 +1,24 @@
 import React, { useState } from "react"
 import { graphql } from "gatsby"
-import { Center, chakra, Text, useToast } from "@chakra-ui/react"
+import {
+  Center,
+  chakra,
+  Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react"
 import axios from "axios"
 import Seo from "../components/SEO"
 
+import "../components/global.css"
 import {
   Badge,
   Box,
@@ -21,6 +36,7 @@ import { Button, ButtonGroup } from "@chakra-ui/react"
 import { CheckIcon, PhoneIcon, StarIcon } from "@chakra-ui/icons"
 import { StaticImage } from "gatsby-plugin-image"
 import ClawVid from "../images/the_claw.mp4"
+import MintVid from "../images/mint_vid.webm"
 
 const tube_vid =
   "https://ipfs.io/ipfs/QmTUVcUpekrK9DC7fDNkqDSJEqFLBDTj7e2UkahgUseJnR?ext=mp4"
@@ -64,6 +80,7 @@ function MetaCard({ nftMeta }) {
 
 const IndexPage = ({ data }) => {
   const toast = useToast()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [mintAddress, setMintAddress] = useState("")
   const handleMintChange = event => setMintAddress(event.target.value)
@@ -193,6 +210,39 @@ const IndexPage = ({ data }) => {
   return (
     <>
       <Seo />
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Find Mint Address</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text color="blackAlpha.600" pb={2}>
+              {" "}
+              The mint address can be located on a profile page from Magic Eden.
+              It is not the address of the person that minted the NFT, these are
+              unique for each solana NFT.{" "}
+            </Text>
+            <chakra.video
+              autoPlay
+              playsInline
+              loop
+              muted
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <source src={MintVid} type="video/webm" />
+            </chakra.video>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Box h="100vh" w="100vw" overflow="hidden">
         <chakra.video
           autoPlay
@@ -262,7 +312,10 @@ const IndexPage = ({ data }) => {
               </Button>
             </Box>
           </Flex>
-
+          <Link color="white" mt={2} onClick={onOpen}>
+            {" "}
+            How can I find a mint address?
+          </Link>
           <Flex
             flexDirection="column"
             alignItems="center"
@@ -276,7 +329,7 @@ const IndexPage = ({ data }) => {
               Tip jar for @richTheCreat00r
             </Text>
             <Text color="white" fontWeight="bold" fontSize="sm">
-              25HZSz114ejiTsg2tbRmFCQ32GMPhV89b6EUAPBSxHyv
+              G54X99FX3UbE8JoZYXZXckXnKhRbmuAnouMUQVQkgvkF
             </Text>
           </Flex>
         </Container>

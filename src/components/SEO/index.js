@@ -44,13 +44,13 @@ const SEO = ({ title, desc, banner, pathname, node }) => {
       </Helmet>
       <Facebook
         desc={seo.description}
-        image={seo.image}
+        image={Banner}
         title={seo.title}
         type={"website"}
         url={seo.url}
         locale={ogLanguage}
       />
-      <Twitter title={seo.title} image={seo.image} desc={seo.description} />
+      <Twitter title={seo.title} image={Banner} desc={seo.description} />
     </>
   )
 }
