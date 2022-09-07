@@ -23,14 +23,14 @@ module.exports = {
         name: "pages",
       },
     },
-    {
-      // keep as first gatsby-source-filesystem plugin for gatsby image support
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: `${__dirname}/static/media`,
-        name: "media",
-      },
-    },
+    // {
+    //   // keep as first gatsby-source-filesystem plugin for gatsby image support
+    //   resolve: "gatsby-source-filesystem",
+    //   options: {
+    //     path: `${__dirname}/static/media`,
+    //     name: "media",
+    //   },
+    // },
     {
       resolve: "@chakra-ui/gatsby-plugin",
       options: {
