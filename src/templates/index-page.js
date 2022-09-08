@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 import {
   Center,
   chakra,
+  Divider,
   Link,
   Modal,
   ModalBody,
@@ -48,7 +49,6 @@ function MetaCard({ nftMeta }) {
       borderRadius="lg"
       borderWidth="4px"
       borderColor={nftMeta.claimed ? "red.700" : "purple"}
-      mr={10}
       overflow="hidden"
       border
     >
@@ -86,7 +86,7 @@ const IndexPage = ({ data }) => {
   const handleMintChange = event => setMintAddress(event.target.value)
   const [isCheckingt00b, setT00bCheck] = useState(false)
   const [nftMeta, setNftMeta] = useState({
-    name: "#00",
+    name: "Degod #4010",
     img: "https://img-cdn.magiceden.dev/rs:fill:640:640:0:0/plain/https://metadata.degods.com/g/4009-dead.png",
     claimed: true,
   })
@@ -230,8 +230,6 @@ const IndexPage = ({ data }) => {
               muted
               style={{
                 objectFit: "cover",
-                width: "100%",
-                height: "100%",
               }}
             >
               <source src={MintVid} type="video/webm" />
@@ -277,12 +275,15 @@ const IndexPage = ({ data }) => {
               p={5}
               w={["100%", "100%", "60%"]}
               mt={5}
+              justifyContent="center"
+              alignItems="center"
             >
               <Input
                 variant="filled"
                 placeholder="Mint Address of DeadGod"
                 onChange={handleMintChange}
               />
+
               <Button
                 mt={3}
                 colorScheme="purple"
@@ -295,26 +296,25 @@ const IndexPage = ({ data }) => {
                 check t00b
               </Button>
             </Box>
-          </Flex>
-          <Link color="white" mt={2} onClick={onOpen}>
-            {" "}
-            How can I find a mint address?
-          </Link>
-          <Flex
-            flexDirection="column"
-            alignItems="center"
-            borderRadius="6"
-            pos="absolute"
-            bottom="0px"
-            p={3}
-            backgroundColor="blackAlpha.500"
-          >
-            <Text color="white" fontWeight="bold" fontSize="xs">
-              💰 Tip jar for @richTheCreat00r
-            </Text>
-            <Text color="white" fontWeight="bold" fontSize="xs">
-              G54X99FX3UbE8JoZYXZXckXnKhRbmuAnouMUQVQkgvkF
-            </Text>
+            <Link color="white" mt={2} onClick={onOpen}>
+              {" "}
+              How to find a mint address?
+            </Link>
+            <Flex
+              flexDirection="column"
+              alignItems="center"
+              borderRadius="6"
+              p={3}
+              backgroundColor="blackAlpha.500"
+              mt={4}
+            >
+              <Text color="white" fontWeight="black" fontSize="xs">
+                💰 Tip @richTheCreat00r
+              </Text>
+              <Text color="white" fontSize="xs">
+                G54X99FX3UbE8JoZYXZXckXnKhRbmuAnouMUQVQkgvkF
+              </Text>
+            </Flex>
           </Flex>
         </Container>
       </Box>
