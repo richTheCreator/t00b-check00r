@@ -36,7 +36,7 @@ import { Button, ButtonGroup } from "@chakra-ui/react"
 import { CheckIcon, PhoneIcon, StarIcon } from "@chakra-ui/icons"
 import { StaticImage } from "gatsby-plugin-image"
 import ClawVid from "../images/the_claw.mp4"
-import MintVid from "../images/mint_vid.webm"
+import MintVid from "../images/mint_vid.mp4"
 
 const tube_vid =
   "https://ipfs.io/ipfs/QmTUVcUpekrK9DC7fDNkqDSJEqFLBDTj7e2UkahgUseJnR?ext=mp4"
@@ -210,6 +210,7 @@ const IndexPage = ({ data }) => {
   return (
     <>
       <Seo />
+      {/* MODAL */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -237,40 +238,24 @@ const IndexPage = ({ data }) => {
             </chakra.video>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+            <Button colorScheme="purple" mr={3} onClick={onClose}>
               Close
             </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Box h="100vh" w="100vw" overflow="hidden">
-        <chakra.video
-          autoPlay
-          playsInline
-          loop
-          muted
-          transform={[
-            "scale(2) translateX(0px)",
-            "scale(2) translateX(0px)",
-            "scale(2) translateX(-150px)",
-          ]}
-          style={{
-            objectFit: "cover",
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <source src={ClawVid} type="video/mp4" />
-        </chakra.video>
+
+      {/* MAIN CONTAINER */}
+      <Box w="100%" zIndex={200}>
         <Container
           zIndex="100"
-          p="10"
+          py="10"
+          px="5"
           maxW="container.md"
           bgColor="transparent"
           centerContent
           pos="relative"
-          justifyContent="center"
+          justifyContent={["flex-start", "flex-start", "center"]}
           h="100vh"
         >
           <Flex
@@ -278,7 +263,6 @@ const IndexPage = ({ data }) => {
             alignItems="center"
             justifyContent="center"
             direction="column"
-            mt={-95}
           >
             <Heading mb={10} color="white" fontFamily="Neucha">
               t00b check00r
@@ -323,16 +307,51 @@ const IndexPage = ({ data }) => {
             pos="absolute"
             bottom="0px"
             p={3}
-            backgroundColor="whiteAlpha.200"
+            backgroundColor="blackAlpha.500"
           >
             <Text color="white" fontWeight="bold" fontSize="xs">
-              Tip jar for @richTheCreat00r
+              💰 Tip jar for @richTheCreat00r
             </Text>
-            <Text color="white" fontWeight="bold" fontSize="sm">
+            <Text color="white" fontWeight="bold" fontSize="xs">
               G54X99FX3UbE8JoZYXZXckXnKhRbmuAnouMUQVQkgvkF
             </Text>
           </Flex>
         </Container>
+      </Box>
+
+      {/* VIDEO BG */}
+      <Box
+        width="100vw"
+        height="100vh"
+        position="absolute"
+        overflow={"hidden"}
+        left="0px"
+        right="0px"
+        bottom="0px"
+        top="0px"
+      >
+        <chakra.video
+          autoPlay
+          playsInline
+          loop
+          muted
+          transform={[
+            "scale(2) translateX(0px)",
+            "scale(2) translateX(0px)",
+            "scale(2) translateX(-150px)",
+          ]}
+          style={{
+            objectFit: "cover",
+            position: "relative",
+            height: "100%",
+            top: "0px",
+            left: "0px",
+            bottom: "0px",
+            right: "0px",
+          }}
+        >
+          <source src={ClawVid} type="video/mp4" />
+        </chakra.video>
       </Box>
     </>
   )
