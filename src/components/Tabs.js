@@ -16,16 +16,16 @@ import Unclaimed from "./Unclaimed"
 const TabSection = () => (
   <Tabs variant="soft-rounded" colorScheme="purple" w="100%">
     <TabList>
-      <Tab color="whiteAlpha.700"> Check DeadGod</Tab>
       <Tab color="whiteAlpha.700">Unclaimed Listings </Tab>
+      <Tab color="whiteAlpha.700"> Check DeadGod</Tab>
     </TabList>
 
     <TabPanels>
       <TabPanel>
-        <CheckDead />
+        <Unclaimed />
       </TabPanel>
       <TabPanel>
-        <Unclaimed />
+        <CheckDead />
       </TabPanel>
     </TabPanels>
   </Tabs>

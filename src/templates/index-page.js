@@ -201,7 +201,7 @@ const IndexPage = ({ data }) => {
       <Flex flexWrap="wrap" w="100%" zIndex={200} overflow="hidden">
         <Flex
           w={["100%", "100%", "50%"]}
-          h={["400px", "400px", "100vh"]}
+          h={["300px", "300px", "100vh"]}
           bg="purple.400"
           position="relative"
           overflow="hidden"
@@ -256,7 +256,13 @@ const IndexPage = ({ data }) => {
             <source src={ClawVid} type="video/mp4" />
           </chakra.video>
         </Flex>
-        <Flex w={["100%", "100%", "50%"]} bg="blackAlpha.800" p={[4, 4, 10]}>
+        <Flex
+          w={["100%", "100%", "50%"]}
+          bg="blackAlpha.800"
+          p={[6, 6, 10]}
+          overflow="auto"
+          maxH={["100%", "100%", "100vh"]}
+        >
           <TabSection />
         </Flex>
 
