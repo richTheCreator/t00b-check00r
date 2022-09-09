@@ -36,7 +36,7 @@ function MetaCard({ nftMeta }) {
             px="2"
             colorScheme={nftMeta.claimed ? "red" : "purple"}
           >
-            {nftMeta.claimed ? "Claimed" : "Unclaimed"}
+            {nftMeta.claimed ? "t00b claimed" : "t00b unclaimed"}
           </Badge>
         </Box>
 
