@@ -1,22 +1,14 @@
 import React, { useState } from "react"
 import { graphql } from "gatsby"
 import {
-  Center,
   chakra,
-  Divider,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
+  FormLabel,
   Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react"
 import axios from "axios"
+import { getMintAddress } from "../getMintAddress"
 import Seo from "../components/SEO"
 
 import "../components/global.css"
@@ -28,14 +20,8 @@ import {
   Heading,
   Image,
   Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  Stack,
 } from "@chakra-ui/react"
-import { Button, ButtonGroup } from "@chakra-ui/react"
-import { CheckIcon, PhoneIcon, StarIcon } from "@chakra-ui/icons"
-import { StaticImage } from "gatsby-plugin-image"
+import { Button } from "@chakra-ui/react"
 import ClawVid from "../images/the_claw.mp4"
 import MintVid from "../images/mint_vid.mp4"
 
@@ -81,9 +67,9 @@ function MetaCard({ nftMeta }) {
 const IndexPage = ({ data }) => {
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [nft_id, setNFTid] = useState("")
 
-  const [mintAddress, setMintAddress] = useState("")
-  const handleMintChange = event => setMintAddress(event.target.value)
+  const handleNFTinput = event => setNFTid(event.target.value)
   const [isCheckingt00b, setT00bCheck] = useState(false)
   const [nftMeta, setNftMeta] = useState({
     name: "Degod #4010",
@@ -94,13 +80,13 @@ const IndexPage = ({ data }) => {
   const checkClaimStatus = async () => {
     setT00bCheck(true)
 
-    const blockRes = await checkBlockChainAPI()
+    const mint_address = getMintAddress(Number(nft_id))
+
+    const blockRes = await checkBlockChainAPI(mint_address)
 
     // make call to check claimed status
     if (blockRes.success) {
-      const degodRes = await checkDeGodAPI()
-      console.log("degodRes ----", degodRes)
-      console.log("blockres ----", blockRes)
+      const degodRes = await checkDeGodAPI(mint_address)
 
       if (degodRes.success) {
         setNftMeta({
@@ -128,14 +114,12 @@ const IndexPage = ({ data }) => {
     }
 
     setT00bCheck(false)
-
-    console.log("block res", blockRes)
   }
 
-  const checkDeGodAPI = async () => {
+  const checkDeGodAPI = async (mint_address) => {
     const degod_url = "https://api.degods.com/y00ts/v1/claims"
     const data = {
-      mintAddresses: [mintAddress],
+      mintAddresses: [mint_address],
     }
 
     const degodReq = {
@@ -158,7 +142,9 @@ const IndexPage = ({ data }) => {
     }
   }
 
-  const checkBlockChainAPI = async () => {
+  const checkBlockChainAPI = async (mint_address) => {
+
+
     const blockchain_url =
       "https://api.theblockchainapi.com/v1/solana/nft?mint_address="
 
@@ -167,7 +153,7 @@ const IndexPage = ({ data }) => {
       APIKeyId: process.env.GATSBY_BLOCKCHAIN_KEY_ID,
     }
     const blockReq = {
-      url: `${blockchain_url}${mintAddress}&network=mainnet-beta`,
+      url: `${blockchain_url}${mint_address}&network=mainnet-beta`,
       headers,
     }
 
@@ -210,38 +196,6 @@ const IndexPage = ({ data }) => {
   return (
     <>
       <Seo />
-      {/* MODAL */}
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Find Mint Address</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text color="blackAlpha.600" pb={2}>
-              {" "}
-              The mint address can be located on a profile page from Magic Eden.
-              It is not the address of the person that minted the NFT, these are
-              unique for each solana NFT.{" "}
-            </Text>
-            <chakra.video
-              autoPlay
-              playsInline
-              loop
-              muted
-              style={{
-                objectFit: "cover",
-              }}
-            >
-              <source src={MintVid} type="video/webm" />
-            </chakra.video>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="purple" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
 
       {/* MAIN CONTAINER */}
       <Box w="100%" zIndex={200}>
@@ -262,9 +216,13 @@ const IndexPage = ({ data }) => {
             justifyContent="center"
             direction="column"
           >
-            <Heading mb={10} color="white" fontFamily="Neucha">
+            <Heading color="white" fontFamily="Neucha">
               t00b check00r
             </Heading>
+            <Text mb={10} color="white" fontFamily="Neucha">
+              {" "}
+              Find out if a DeadGod has claimed it's y00t t00b or not.
+            </Text>
             <MetaCard nftMeta={nftMeta} />
             <Box
               style={{
@@ -273,15 +231,18 @@ const IndexPage = ({ data }) => {
               }}
               borderRadius="6"
               p={5}
-              w={["100%", "100%", "60%"]}
+              w={["100%", "100%", "50%"]}
               mt={5}
               justifyContent="center"
               alignItems="center"
             >
+              <FormLabel fontWeight="bold" color="white">
+                DeadGod ID #{" "}
+              </FormLabel>
               <Input
                 variant="filled"
-                placeholder="Mint Address of DeadGod"
-                onChange={handleMintChange}
+                placeholder="4010"
+                onChange={handleNFTinput}
               />
 
               <Button
@@ -296,10 +257,6 @@ const IndexPage = ({ data }) => {
                 check t00b
               </Button>
             </Box>
-            <Link color="white" mt={2} onClick={onOpen}>
-              {" "}
-              How to find a mint address?
-            </Link>
             <Flex
               flexDirection="column"
               alignItems="center"
