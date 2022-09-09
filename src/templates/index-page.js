@@ -1,9 +1,11 @@
 import React, { useState } from "react"
 import { graphql } from "gatsby"
 import {
+  Center,
   chakra,
   FormLabel,
   Text,
+  Tooltip,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react"
@@ -23,7 +25,8 @@ import {
 } from "@chakra-ui/react"
 import { Button } from "@chakra-ui/react"
 import ClawVid from "../images/the_claw.mp4"
-import MintVid from "../images/mint_vid.mp4"
+import TipJar from "../components/tipjar"
+import TabSection from "../components/Tabs"
 
 const tube_vid =
   "https://ipfs.io/ipfs/QmTUVcUpekrK9DC7fDNkqDSJEqFLBDTj7e2UkahgUseJnR?ext=mp4"
@@ -66,7 +69,6 @@ function MetaCard({ nftMeta }) {
 
 const IndexPage = ({ data }) => {
   const toast = useToast()
-  const { isOpen, onOpen, onClose } = useDisclosure()
   const [nft_id, setNFTid] = useState("")
 
   const handleNFTinput = event => setNFTid(event.target.value)
@@ -116,7 +118,7 @@ const IndexPage = ({ data }) => {
     setT00bCheck(false)
   }
 
-  const checkDeGodAPI = async (mint_address) => {
+  const checkDeGodAPI = async mint_address => {
     const degod_url = "https://api.degods.com/y00ts/v1/claims"
     const data = {
       mintAddresses: [mint_address],
@@ -142,9 +144,7 @@ const IndexPage = ({ data }) => {
     }
   }
 
-  const checkBlockChainAPI = async (mint_address) => {
-
-
+  const checkBlockChainAPI = async mint_address => {
     const blockchain_url =
       "https://api.theblockchainapi.com/v1/solana/nft?mint_address="
 
@@ -198,8 +198,69 @@ const IndexPage = ({ data }) => {
       <Seo />
 
       {/* MAIN CONTAINER */}
-      <Box w="100%" zIndex={200}>
-        <Container
+      <Flex flexWrap="wrap" w="100%" zIndex={200} overflow="hidden">
+        <Flex
+          w={["100%", "100%", "50%"]}
+          h={["400px", "400px", "100vh"]}
+          bg="purple.400"
+          position="relative"
+          overflow="hidden"
+        >
+          <Center zIndex={10} w="100%">
+            <Flex flexDirection="column" alignItems="center">
+              <Heading
+                as="h1"
+                size="2xl"
+                color="white"
+                fontFamily="Neucha"
+                textAlign="center"
+              >
+                t00b check00r
+              </Heading>
+              <Text
+                mb={5}
+                fontSize="xl"
+                color="white"
+                fontFamily="Neucha"
+                textAlign="center"
+              >
+                {" "}
+                Find out if a DeadGod has claimed it's y00t t00b or not.
+              </Text>
+              <Text fontWeight="bold" fontSize="sm" color="white" mb="2">
+                {" "}
+                TIP THE CREAT00R
+              </Text>
+
+              <Tooltip label="Copy to clipboard" color="white">
+                <TipJar />
+              </Tooltip>
+            </Flex>
+          </Center>
+          <chakra.video
+            autoPlay
+            playsInline
+            loop
+            zIndex={2}
+            muted
+            style={{
+              objectFit: "cover",
+              position: "absolute",
+              height: "100%",
+              top: "0px",
+              left: "0px",
+              bottom: "0px",
+              right: "0px",
+            }}
+          >
+            <source src={ClawVid} type="video/mp4" />
+          </chakra.video>
+        </Flex>
+        <Flex w={["100%", "100%", "50%"]} bg="blackAlpha.800" p={[4, 4, 10]}>
+          <TabSection />
+        </Flex>
+
+        {/* <Container
           zIndex="100"
           py="10"
           px="5"
@@ -216,13 +277,7 @@ const IndexPage = ({ data }) => {
             justifyContent="center"
             direction="column"
           >
-            <Heading color="white" fontFamily="Neucha">
-              t00b check00r
-            </Heading>
-            <Text mb={10} color="white" fontFamily="Neucha">
-              {" "}
-              Find out if a DeadGod has claimed it's y00t t00b or not.
-            </Text>
+
             <MetaCard nftMeta={nftMeta} />
             <Box
               style={{
@@ -272,12 +327,12 @@ const IndexPage = ({ data }) => {
                 G54X99FX3UbE8JoZYXZXckXnKhRbmuAnouMUQVQkgvkF
               </Text>
             </Flex>
-          </Flex>
-        </Container>
-      </Box>
+          </Flex> 
+        </Container> */}
+      </Flex>
 
       {/* VIDEO BG */}
-      <Box
+      {/* <Box
         width="100vw"
         height="100vh"
         position="absolute"
@@ -287,29 +342,8 @@ const IndexPage = ({ data }) => {
         bottom="0px"
         top="0px"
       >
-        <chakra.video
-          autoPlay
-          playsInline
-          loop
-          muted
-          transform={[
-            "scale(2) translateX(0px)",
-            "scale(2) translateX(0px)",
-            "scale(2) translateX(-150px)",
-          ]}
-          style={{
-            objectFit: "cover",
-            position: "relative",
-            height: "100%",
-            top: "0px",
-            left: "0px",
-            bottom: "0px",
-            right: "0px",
-          }}
-        >
-          <source src={ClawVid} type="video/mp4" />
-        </chakra.video>
-      </Box>
+
+      </Box> */}
     </>
   )
 }
